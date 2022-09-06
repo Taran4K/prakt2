@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Все студенты</h1>
+<a href="/students/filter">Поиск студента</a>
+<a href="/students/add">Добавить студента</a>
+<div th:each="el : ${students}">
+  <h3 th:text="${el.getSurname()}"></h3>
+  <p th:text="${el.getName()}"></p>
+  <p th:text="${el.getOtchestvo()}"></p>
+  <p th:text="${el.getStudent_group()}"></p>
+  <p th:text="${el.getAge()}"></p>
+</div>
+</body>
+</html>

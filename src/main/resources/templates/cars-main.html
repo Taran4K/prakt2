@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Все машины</h1>
+<a href="/cars/filter">Поиск машины</a>
+<a href="/cars/add">Добавить машину</a>
+<div th:each="el : ${cars}">
+  <h3 th:text="${el.getMark()}"></h3>
+  <p th:text="${el.getVladelec()}"></p>
+  <p th:text="${el.isPolom()}"></p>
+  <p th:text="${el.getAge()}"></p>
+  <p th:text="${el.getProbeg()}"></p>
+</div>
+</body>
+</html>

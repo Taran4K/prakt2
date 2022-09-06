@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="${'/cars/add'}" method="post">
+  <div><input type="text" name="mark" placeholder="Марка"></div>
+  <div><input type="text" name="vladelec" placeholder="Владелец"></div>
+  <div><input type="checkbox" name="polom" placeholder="Была поломана"></div>
+  <div><input type="number" name="probeg" placeholder="Пробег"></div>
+  <div><input type="number" name="age" placeholder="Возраст"></div>
+  <br>
+  <button type="submit">Добавить машину</button>
+</form>
+</body>
+</html>
