@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/abc.css"/>
     <title>Title</title>
 </head>
 <body>
@@ -9,11 +10,9 @@
 <a href="/cars/filter">Поиск машины</a>
 <a href="/cars/add">Добавить машину</a>
 <div th:each="el : ${cars}">
-  <h3 th:text="${el.getMark()}"></h3>
-  <p th:text="${el.getVladelec()}"></p>
-  <p th:text="${el.isPolom()}"></p>
-  <p th:text="${el.getAge()}"></p>
-  <p th:text="${el.getProbeg()}"></p>
+        <h3 th:text="${el.getMark()}" ></h3>
+        <p th:text="${el.getVladelec()}"></p>
+        <a th:href="'/cars/' + ${el.id}"> Подробнее </a>
 </div>
 </body>
 </html>

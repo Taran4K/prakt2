@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <link rel="stylesheet" href="/css/abc.css"/>
+    <title>Title</title>
+</head>
+<body>
+<div th:each="el : ${students}">
+  <h3>Подробнее про студента: </h3>
+    <h3 th:text="${el.getSurname()}"></h3>
+    <p th:text="${el.getName()}"></p>
+    <p th:text="${el.getOtchestvo()}"></p>
+    <p th:text="${el.getStudent_group()}"></p>
+    <p th:text="${el.getAge()}"></p>
+  <a th:href="'/students/' + ${el.id} + '/edit'">Редактировать</a>
+  <form th:action="'/students/' + ${el.id} + '/remove'" method="post">
+    <button type="submit" class="btn btn-del">Удалить</button>
+  </form>
+</div>
+</body>
+</html>

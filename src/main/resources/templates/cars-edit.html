@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/abc.css"/>
+    <title>Title</title>
+</head>
+<body>
+<div th:each="el : ${cars}">
+  <form method="post">
+    <div><input type="text" th:value="${el.mark}" name="mark" placeholder="Марка"></div>
+    <div><input type="text" th:value="${el.vladelec}" name="vladelec" placeholder="Владелец"></div>
+    <div><input type="checkbox" th:value="${el.polom}" name="polom" placeholder="Была поломана"></div>
+    <div><input type="number" th:value="${el.probeg}" name="probeg" placeholder="Пробег"></div>
+    <div><input type="number" th:value="${el.age}" name="age" placeholder="Возраст"></div>
+    <button type="submit">Сохранить изменения</button>
+  </form>
+</div>
+</body>
+</html>
