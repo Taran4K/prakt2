@@ -1,17 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="/css/abc.css"/>
     <title>Title</title>
 </head>
 <body>
-<form th:action="${'/cars/add'}" method="post">
-  <div><input type="text" name="mark" placeholder="Марка"></div>
-  <div><input type="text" name="vladelec" placeholder="Владелец"></div>
+<form th:action="${'/cars/add'}" method="post" th:object="${cars}">
+  <input th:field="*{mark}" type="text" name="mark" placeholder="Марка">
+    <div style="color: red" th:if="${#fields.hasErrors('mark')}" th:errors="*{mark}"></div>
+  <input th:field="*{vladelec}" type="text" name="vladelec" placeholder="Владелец">
+    <div style="color: red" th:if="${#fields.hasErrors('vladelec')}" th:errors="*{vladelec}"></div>
   <div><input type="checkbox" checked name="polom" placeholder="Была поломана"></div>
-  <div><input type="number" name="probeg" placeholder="Пробег"></div>
-  <div><input type="number" name="age" placeholder="Возраст"></div>
+  <input th:field="*{probeg}" type="number" name="probeg" placeholder="Пробег">
+    <div style="color: red" th:if="${#fields.hasErrors('probeg')}" th:errors="*{probeg}"></div>
+  <input th:field="*{age}" type="number" name="age" placeholder="Возраст">
+    <div style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></div>
   <br>
   <button type="submit">Добавить машину</button>
 </form>

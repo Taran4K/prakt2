@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 
 @Entity
@@ -12,7 +15,10 @@ public class Students {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
+    @NotEmpty(message = "Поле не может быть пустым")
+    @Size(min=2, max=30, message = "Размер данного поля должен быть в диапазоне от 2 до 30")
     private String name, surname, otchestvo, student_group;
+    @NotNull(message = "Поле не может быть пустым")
     private Integer age;
 
     public Students(String name, String surname, String otchestvo, String student_group, Integer age) {

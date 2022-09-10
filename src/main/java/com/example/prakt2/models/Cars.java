@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Cars {
@@ -11,9 +14,12 @@ public class Cars {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
+    @NotEmpty(message = "Поле не может быть пустым")
+    @Size(min=2, max=30, message = "Размер данного поля должен быть в диапазоне от 2 до 30")
     private String mark, vladelec;
     public boolean Polom;
-    private Integer age, probeg;
+    @NotNull(message = "Поле не может быть пустым")
+    private Integer probeg, age;
 
     public Cars() {
 
@@ -74,4 +80,5 @@ public class Cars {
         this.age = age;
         this.probeg = probeg;
     }
+
 }

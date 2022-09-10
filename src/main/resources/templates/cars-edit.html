@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/abc.css"/>
@@ -7,14 +7,25 @@
 </head>
 <body>
 <div th:each="el : ${cars}">
-  <form method="post">
-    <div><input type="text" th:value="${el.mark}" name="mark" placeholder="Марка"></div>
-    <div><input type="text" th:value="${el.vladelec}" name="vladelec" placeholder="Владелец"></div>
-    <div><input type="checkbox" th:value="${el.polom}" name="polom" placeholder="Была поломана"></div>
-    <div><input type="number" th:value="${el.probeg}" name="probeg" placeholder="Пробег"></div>
-    <div><input type="number" th:value="${el.age}" name="age" placeholder="Возраст"></div>
-    <button type="submit">Сохранить изменения</button>
-  </form>
+    <h1>Редактирование машины</h1>
+    <form method="post" th:object="${cars}">
+
+        <input th:field="*{mark}" style="width: 250px; height: 40px; margin: 2px; display: list-item" type="text" th:value="${cars.getMark()}" name="mark" placeholder="Введите марку">
+        <div style="width: 250px; height: 40px; margin: 2px" th:if="*{#fields.hasErrors('mark')}" th:errors="*{mark}"></div><br>
+
+        <input th:field="*{vladelec}" style="width: 250px; height: 40px; margin: 2px; display: list-item" type="text" th:value="${cars.getVladelec()}" name="vladelec" placeholder="Введите имя">
+        <div style="width: 250px; height: 40px; margin: 2px" th:if="*{#fields.hasErrors('vladelec')}" th:errors="*{vladelec}"></div><br>
+
+        <input th:field="*{polom}" style="width: 250px; height: 40px; margin: 2px; display: list-item" type="checkbox" checked name="polom">
+
+        <input th:field="*{age}" style="width: 250px; height: 40px; margin: 2px; display: list-item" type="number" th:value="${cars.getAge()}" name="age" placeholder="Введите возраст">
+        <div style="width: 250px; height: 40px; margin: 2px" th:if="*{#fields.hasErrors('age')}" th:errors="*{age}"></div><br>
+
+        <input th:field="*{probeg}" style="width: 250px; height: 40px; margin: 2px; display: list-item" type="number" th:value="${cars.getProbeg()}" name="probeg" placeholder="Введите пробег">
+        <div style="width: 250px; height: 40px; margin: 2px" th:if="*{#fields.hasErrors('probeg')}" th:errors="*{probeg}"></div><br>
+
+        <button type="submit">Сохранить</button>
+    </form>
 </div>
 </body>
 </html>

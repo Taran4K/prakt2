@@ -6,11 +6,10 @@ import com.example.prakt2.repos.StudentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -34,19 +33,18 @@ public class StudentsController {
         return "students-main";
     }
     @GetMapping("/students/add")
-    public String blogAdd(Model model) {return "students-add";}
+    public String blogAdd(Students student, Model model) {return "students-add";}
 
 
     @PostMapping("/students/add")
-    public String blogPostAdd(@RequestParam String name,
-                              @RequestParam String surname,
-                              @RequestParam String otchestvo,
-                              @RequestParam String group,
-                              @RequestParam int age,
-                              Model model) {
-        Students students = new Students(name, surname, otchestvo,group, age);
-        studentsRepository.save(students);
-        return "redirect:/";
+    public String studentAdd(@ModelAttribute("students")@Valid Students student, BindingResult bindingResult)
+    {
+        if(bindingResult.hasErrors())
+        {
+            return "students-add";
+        }
+        studentsRepository.save(student);
+        return "redirect:/students";
     }
     @GetMapping("/students/filter")
     public String blogfilter(Model model) {return "students-filter";}
@@ -80,35 +78,22 @@ public class StudentsController {
         return "students-details";
     }
     @GetMapping("/students/{id}/edit")
-    public String blogEdit(@PathVariable("id")long id,
-                           Model model)
+    public String studentEdit(@PathVariable("id")long id, Model model)
     {
-        if(!studentsRepository.existsById(id)){
-            return "redirect:/";
-        }
-        Optional<Students> post = studentsRepository.findById(id);
-        ArrayList<Students> res = new ArrayList<>();
-        post.ifPresent(res::add);
+        Students res = studentsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Неверный id:" + id));
         model.addAttribute("students",res);
         return "students-edit";
     }
     @PostMapping("/students/{id}/edit")
-    public String blogPostUpdate(@PathVariable("id")long id,
-                                 @RequestParam String name,
-                                 @RequestParam String surname,
-                                 @RequestParam String otchestvo,
-                                 @RequestParam String group,
-                                 @RequestParam int age,
-                                 Model model)
+    public String StudentUpdate(@PathVariable("id")long id, @ModelAttribute("students")@Valid Students student, BindingResult bindingResult)
     {
-        Students students = studentsRepository.findById(id).orElseThrow();
-        students.setName(name);
-        students.setSurname(surname);
-        students.setOtchestvo(otchestvo);
-        students.setStudent_group(group);
-        students.setAge(age);
-        studentsRepository.save(students);
-        return "redirect:/";
+        student.setId(id);
+        if(bindingResult.hasErrors())
+        {
+            return "students-edit";
+        }
+        studentsRepository.save(student);
+        return "redirect:/students";
     }
     @PostMapping("/students/{id}/remove")
     public String blogBlogDelete(@PathVariable("id") long id, Model model){

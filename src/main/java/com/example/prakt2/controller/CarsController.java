@@ -4,14 +4,15 @@ import com.example.prakt2.models.Cars;
 import com.example.prakt2.models.Students;
 import com.example.prakt2.repos.CarsRepository;
 import com.example.prakt2.repos.StudentsRepository;
+import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,20 +30,30 @@ public class CarsController {
         return "cars-main";
     }
     @GetMapping("/cars/add")
-    public String blogAdd(Model model) {return "cars-add";}
-
+    public String blogAdd(Cars cars,Model model) {return "cars-add";}
 
     @PostMapping("/cars/add")
-    public String blogPostAdd(@RequestParam String mark,
-                              @RequestParam String vladelec,
-                              @RequestParam Boolean polom,
-                              @RequestParam int probeg,
-                              @RequestParam int age,
-                              Model model) {
-        Cars cars = new Cars(mark, vladelec, polom, age, probeg);
+    public String carsPostAdd(@ModelAttribute ("cars") @Valid Cars cars, BindingResult bindingResult)
+    {
+        if (bindingResult.hasErrors()){
+            return "cars-add";
+        }
         carsRepository.save(cars);
         return "redirect:/";
     }
+
+//    @PostMapping("/cars/add")
+//    public String blogPostAdd(@RequestParam String mark,
+//                              @RequestParam String vladelec,
+//                              @RequestParam Boolean polom,
+//                              @RequestParam int probeg,
+//                              @RequestParam int age,
+//                              Model model) {
+//        Cars cars = new Cars(mark, vladelec, polom, age, probeg);
+//        carsRepository.save(cars);
+//        return "redirect:/";
+//    }
+
     @GetMapping("/cars/filter")
     public String blogfilter(Model model) {return "cars-filter";}
 
@@ -73,37 +84,26 @@ public class CarsController {
         }
         return "cars-details";
     }
+
     @GetMapping("/cars/{id}/edit")
-    public String blogEdit(@PathVariable("id")long id,
-                           Model model)
+    public String blogEdit(@PathVariable("id")long id, Model model)
     {
-        if(!carsRepository.existsById(id)){
-            return "redirect:/";
-        }
-        Optional<Cars> post = carsRepository.findById(id);
-        ArrayList<Cars> res = new ArrayList<>();
-        post.ifPresent(res::add);
+        Cars res = carsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Неверный id:" + id));
         model.addAttribute("cars",res);
         return "cars-edit";
     }
     @PostMapping("/cars/{id}/edit")
-    public String blogPostUpdate(@PathVariable("id")long id,
-                                 @RequestParam String mark,
-                                 @RequestParam String vladelec,
-                                 @RequestParam Boolean polom,
-                                 @RequestParam int probeg,
-                                 @RequestParam int age,
-                                 Model model)
+    public String blogPostUpdate(@PathVariable("id")long id, @ModelAttribute("cars")@Valid Cars cars, BindingResult bindingResult)
     {
-        Cars cars = carsRepository.findById(id).orElseThrow();
-        cars.setMark(mark);
-        cars.setVladelec(vladelec);
-        cars.setPolom(polom);
-        cars.setProbeg(probeg);
-        cars.setAge(age);
+        cars.setId(id);
+        if(bindingResult.hasErrors())
+        {
+            return "cars-edit";
+        }
         carsRepository.save(cars);
-        return "redirect:/";
+        return "redirect:/cars";
     }
+
     @PostMapping("/cars/{id}/remove")
     public String blogBlogDelete(@PathVariable("id") long id, Model model){
         Cars cars = carsRepository.findById(id).orElseThrow();

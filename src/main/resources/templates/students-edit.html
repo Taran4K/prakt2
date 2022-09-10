@@ -7,14 +7,26 @@
 </head>
 <body>
 <div th:each="el : ${students}">
-  <form method="post">
-    <div><input type="text" th:value="${el.surname}" name="surname" placeholder="Фамилия"></div>
-    <div><input type="text" th:value="${el.name}" name="name" placeholder="Имя"></div>
-    <div><input type="text" th:value="${el.otchestvo}" name="otchestvo" placeholder="Отчество"></div>
-    <div><input type="text" th:value="${el.student_group}" name="group" placeholder="Группа"></div>
-    <div><input type="number" th:value="${el.age}" name="age" placeholder="Возраст"></div>
-    <button type="submit">Сохранить изменения</button>
-  </form>
+    <h1>Редактирование студента</h1>
+    <form method="post" th:object="${students}">
+
+        <input th:field="*{surname}" style="width: 250px; height: 40px; margin: 2px; display: list-item" type="text" th:value="${students.getSurname()}" name="surname" placeholder="Введите фамилию">
+        <div style="width: 250px; height: 40px; margin: 2px" th:if="*{#fields.hasErrors('surname')}" th:errors="*{surname}"></div><br>
+
+        <input th:field="*{name}" style="width: 250px; height: 40px; margin: 2px; display: list-item" type="text" th:value="${students.getName()}" name="name" placeholder="Введите имя">
+        <div style="width: 250px; height: 40px; margin: 2px" th:if="*{#fields.hasErrors('name')}" th:errors="*{name}"></div><br>
+
+        <input th:field="*{otchestvo}" style="width: 250px; height: 40px; margin: 2px; display: list-item" type="text" th:value="${students.getOtchestvo()}" name="otchestvo" placeholder="Введите отчество">
+        <div style="width: 250px; height: 40px; margin: 2px" th:if="*{#fields.hasErrors('otchestvo')}" th:errors="*{otchestvo}"></div><br>
+
+        <input th:field="*{student_group}" style="width: 250px; height: 40px; margin: 2px; display: list-item" type="text" th:value="${students.getStudent_group()}" name="student_group" placeholder="Введите группу">
+        <div style="width: 250px; height: 40px; margin: 2px" th:if="*{#fields.hasErrors('student_group')}" th:errors="*{student_group}"></div><br>
+
+        <input th:field="*{age}" style="width: 250px; height: 40px; margin: 2px; display: list-item" type="number" th:value="${students.getAge()}" name="age" placeholder="Введите возраст">
+        <div style="width: 250px; height: 40px; margin: 2px" th:if="*{#fields.hasErrors('age')}" th:errors="*{age}"></div><br>
+
+        <button type="submit">Сохранить</button>
+    </form>
 </div>
 </body>
 </html>

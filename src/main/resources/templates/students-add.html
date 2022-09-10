@@ -6,14 +6,25 @@
     <title>Title</title>
 </head>
 <body>
-<form th:action="${'/students/add'}" method="post">
-    <div><input type="text" name="surname" placeholder="Фамилия"></div>
-    <div><input type="text" name="name" placeholder="Имя"></div>
-    <div><input type="text" name="otchestvo" placeholder="Отчество"></div>
-    <div><input type="text" name="group" placeholder="Группа"></div>
-    <div><input type="number" name="age" placeholder="Возраст"></div>
-    <br>
-    <button type="submit">Добавить студента</button>
+<h1>Добавление студента</h1>
+<form th:action = "${'/students/add'}" method="post" th:object="${students}">
+
+    <input th:field="*{surname}" style="width: 250px; height: 40px; margin: 2px" type="text" name="surname" placeholder="Введите фамилию"><br>
+    <div style="width: 250px; height: 40px; margin: 2px" th:if="*{#fields.hasErrors('surname')}" th:errors="*{surname}"></div><br>
+
+    <input th:field="*{name}" style="width: 250px; height: 40px; margin: 2px" type="text" name="name" placeholder="Введите имя"><br>
+    <div style="width: 250px; height: 40px; margin: 2px" th:if="*{#fields.hasErrors('name')}" th:errors="*{name}"></div><br>
+
+    <input th:field="*{otchestvo}" style="width: 250px; height: 40px; margin: 2px" type="text" name="otchestvo" placeholder="Введите отчество"><br>
+    <div style="width: 250px; height: 40px; margin: 2px" th:if="*{#fields.hasErrors('otchestvo')}" th:errors="*{otchestvo}"></div><br>
+
+    <input th:field="*{student_group}" style="width: 250px; height: 40px; margin: 2px" type="text" name="student_group" placeholder="Введите группу"><br>
+    <div style="width: 250px; height: 40px; margin: 2px" th:if="*{#fields.hasErrors('student_group')}" th:errors="*{student_group}"></div><br>
+
+    <input th:field="*{age}" style="width: 250px; height: 40px; margin: 2px" type="number" name="age" placeholder="Введите возраст"><br>
+    <div style="width: 250px; height: 40px; margin: 2px" th:if="*{#fields.hasErrors('age')}" th:errors="*{age}"></div><br>
+
+    <button type="submit"> Добавить студента</button>
 </form>
 </body>
 </html>
