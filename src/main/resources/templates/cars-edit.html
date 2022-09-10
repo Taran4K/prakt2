@@ -10,19 +10,19 @@
     <h1>Редактирование машины</h1>
     <form method="post" th:object="${cars}">
 
-        <input th:field="*{mark}" style="width: 250px; height: 40px; margin: 2px; display: list-item" type="text" th:value="${cars.getMark()}" name="mark" placeholder="Введите марку">
-        <div style="width: 250px; height: 40px; margin: 2px" th:if="*{#fields.hasErrors('mark')}" th:errors="*{mark}"></div><br>
+        <input th:field="*{mark}" type="text" th:value="${cars.getMark()}" name="mark" placeholder="Введите марку">
+        <div style="color: red" th:if="*{#fields.hasErrors('mark')}" th:errors="*{mark}"></div><br>
 
-        <input th:field="*{vladelec}" style="width: 250px; height: 40px; margin: 2px; display: list-item" type="text" th:value="${cars.getVladelec()}" name="vladelec" placeholder="Введите имя">
-        <div style="width: 250px; height: 40px; margin: 2px" th:if="*{#fields.hasErrors('vladelec')}" th:errors="*{vladelec}"></div><br>
+        <input th:field="*{vladelec}" type="text" th:value="${cars.getVladelec()}" name="vladelec" placeholder="Введите имя">
+        <div style="color: red" th:if="*{#fields.hasErrors('vladelec')}" th:errors="*{vladelec}"></div><br>
 
-        <input th:field="*{polom}" style="width: 250px; height: 40px; margin: 2px; display: list-item" type="checkbox" checked name="polom">
+       <div><input th:field="*{polom}"  type="checkbox" checked name="polom"></div>
 
-        <input th:field="*{age}" style="width: 250px; height: 40px; margin: 2px; display: list-item" type="number" th:value="${cars.getAge()}" name="age" placeholder="Введите возраст">
-        <div style="width: 250px; height: 40px; margin: 2px" th:if="*{#fields.hasErrors('age')}" th:errors="*{age}"></div><br>
+        <input th:field="*{age}" type="number" th:value="${cars.getAge()}" name="age" placeholder="Введите возраст">
+        <div style="color: red" th:if="*{#fields.hasErrors('age')}" th:errors="*{age}"></div><br>
 
-        <input th:field="*{probeg}" style="width: 250px; height: 40px; margin: 2px; display: list-item" type="number" th:value="${cars.getProbeg()}" name="probeg" placeholder="Введите пробег">
-        <div style="width: 250px; height: 40px; margin: 2px" th:if="*{#fields.hasErrors('probeg')}" th:errors="*{probeg}"></div><br>
+        <input th:field="*{probeg}"  type="number" th:value="${cars.getProbeg()}" name="probeg" placeholder="Введите пробег">
+        <div style="color: red" th:if="*{#fields.hasErrors('probeg')}" th:errors="*{probeg}"></div><br>
 
         <button type="submit">Сохранить</button>
     </form>
