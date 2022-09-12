@@ -8,4 +8,5 @@ import java.util.List;
 public interface StudentsRepository extends CrudRepository<Students, Long> {
     List<Students> findBySurnameContains(String surname);
     List<Students> findBySurname(String surname);
+
 }

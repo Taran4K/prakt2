@@ -1,16 +1,22 @@
 package com.example.prakt2.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Collection;
+import java.util.Set;
+import java.util.Collection;
+import java.util.Set;
+
+import static org.hibernate.engine.transaction.internal.jta.JtaStatusHelper.isActive;
 
 
 @Entity
-public class Students {
+public class Students{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
@@ -28,13 +34,8 @@ public class Students {
         this.student_group = student_group;
         this.age = age;
     }
-
     public Students() {
 
-    }
-
-    public Long getId() {
-        return Id;
     }
 
     public void setId(Long id) {

@@ -8,6 +8,8 @@
 <body>
 <h1>Добавление студента</h1>
 <form th:action = "${'/students/add'}" method="post" th:object="${students}">
+    <div><label> User Name : <input type="text" name="username"/> </label></div>
+    <div><label> Password: <input type="password" name="password"/> </label></div>
 
     <input th:field="*{surname}" style="width: 250px; height: 40px; margin: 2px" type="text" name="surname" placeholder="Введите фамилию"><br>
     <div style="width: 250px; height: 40px; margin: 2px" th:if="*{#fields.hasErrors('surname')}" th:errors="*{surname}"></div><br>
