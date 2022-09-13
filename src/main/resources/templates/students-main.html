@@ -10,6 +10,7 @@
 <h1>Все студенты</h1>
 <a href="/students/filter">Поиск студента</a>
 <a href="/students/add">Добавить студента</a>
+<a href="/person/add">Связать студента и университет</a>
 <div th:each="el : ${students}">
     <h3 th:text="${el.getSurname()}" ></h3>
     <p th:text="${el.getName()}"></p>

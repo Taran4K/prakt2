@@ -7,8 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Collection;
-import java.util.Set;
+import java.util.*;
 import java.util.Collection;
 import java.util.Set;
 
@@ -27,6 +26,12 @@ public class Students{
     @NotNull(message = "Поле не может быть пустым")
     private Integer age;
 
+    @ManyToMany
+    @JoinTable (name="student_university",
+            joinColumns=@JoinColumn (name="student_id"),
+            inverseJoinColumns=@JoinColumn(name="university_id"))
+    private List<University> universities;
+
     public Students(String name, String surname, String otchestvo, String student_group, Integer age) {
         this.name = name;
         this.surname = surname;
@@ -36,6 +41,10 @@ public class Students{
     }
     public Students() {
 
+    }
+
+    public Long getId() {
+        return Id;
     }
 
     public void setId(Long id) {
@@ -80,5 +89,13 @@ public class Students{
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public List<University> getUniversities() {
+        return universities;
+    }
+
+    public void setUniversities(List<University> universities) {
+        this.universities = universities;
     }
 }

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Добавление нового студента</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<form th:action="${'/person/add'}" method="post">
+  <select  name="student">
+    <div th:each="element : ${students}">
+      <option th:text="${element.name}"></option>
+    </div>
+  </select>
+  <select  name="universiti">
+    <div th:each="element : ${universities}">
+      <option th:text="${element.name}"></option>
+    </div>
+  </select>
+  <br>
+  <button type="submit">Добавить человека</button>
+</form>
+</body>
+</html>

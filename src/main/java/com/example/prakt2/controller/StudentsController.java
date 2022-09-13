@@ -1,8 +1,9 @@
 package com.example.prakt2.controller;
 
-import com.example.prakt2.models.Cars;
 import com.example.prakt2.models.Students;
+import com.example.prakt2.models.University;
 import com.example.prakt2.repos.StudentsRepository;
+import com.example.prakt2.repos.UniversityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,8 @@ import java.util.Optional;
 public class StudentsController {
     @Autowired
     private StudentsRepository studentsRepository;
+    @Autowired
+    private UniversityRepository universityRepository;
 
     @GetMapping("/")
     public String Main(Model model)
@@ -44,6 +47,26 @@ public class StudentsController {
             return "students-add";
         }
         studentsRepository.save(student);
+        return "redirect:/students";
+    }
+    @GetMapping("/person/add")
+    private String Main2(Model model){
+        Iterable<Students> students = studentsRepository.findAll();
+        model.addAttribute("students", students);
+        Iterable<University> universities = universityRepository.findAll();
+        model.addAttribute("universities", universities);
+
+        return "person";
+    }
+    @PostMapping("/person/add")
+    public String blogPostAdd(@RequestParam String student, @RequestParam String universiti, Model model)
+    {
+        Students student2 = studentsRepository.findByName(student);
+        University university2 = universityRepository.findByName(universiti);
+        student2.getUniversities().add(university2);
+        university2.getStudents().add(student2);
+        studentsRepository.save(student2);
+        universityRepository.save(university2);
         return "redirect:/students";
     }
     @GetMapping("/students/filter")
