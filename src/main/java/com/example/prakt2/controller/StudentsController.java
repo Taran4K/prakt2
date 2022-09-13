@@ -1,7 +1,9 @@
 package com.example.prakt2.controller;
 
+import com.example.prakt2.models.Address;
 import com.example.prakt2.models.Students;
 import com.example.prakt2.models.University;
+import com.example.prakt2.repos.AddressRepository;
 import com.example.prakt2.repos.StudentsRepository;
 import com.example.prakt2.repos.UniversityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ import java.util.Optional;
 
 @Controller
 public class StudentsController {
+    @Autowired
+    public AddressRepository addressRepository;
     @Autowired
     private StudentsRepository studentsRepository;
     @Autowired
@@ -36,17 +40,22 @@ public class StudentsController {
         return "students-main";
     }
     @GetMapping("/students/add")
-    public String blogAdd(Students student, Model model) {return "students-add";}
+    public String blogAdd(Students student, Model model) {
+        Iterable<Address> address = addressRepository.findAll();
+        model.addAttribute("address",address);
+        return "students-add";}
 
 
     @PostMapping("/students/add")
-    public String studentAdd(@ModelAttribute("students")@Valid Students student, BindingResult bindingResult)
+    public String studentAdd(@ModelAttribute("students")@Valid Students student,@RequestParam String street, BindingResult bindingResult)
     {
+        Address adress = addressRepository.findByStreet(street);
+        Students person = new Students(student.getName(), student.getSurname(), student.getOtchestvo(), student.getStudent_group(), student.getAge(), adress);
         if(bindingResult.hasErrors())
         {
             return "students-add";
         }
-        studentsRepository.save(student);
+        studentsRepository.save(person);
         return "redirect:/students";
     }
     @GetMapping("/person/add")

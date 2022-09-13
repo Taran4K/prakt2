@@ -1,8 +1,10 @@
 package com.example.prakt2.controller;
 
 import com.example.prakt2.models.Cars;
+import com.example.prakt2.models.PTS;
 import com.example.prakt2.models.Students;
 import com.example.prakt2.repos.CarsRepository;
+import com.example.prakt2.repos.PTSRepository;
 import com.example.prakt2.repos.StudentsRepository;
 import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ import java.util.Optional;
 public class CarsController {
     @Autowired
     private CarsRepository carsRepository;
+    @Autowired
+    private PTSRepository ptsRepository;
 
     @GetMapping("/cars")
     public String CarsMain(Model model)
@@ -30,15 +34,20 @@ public class CarsController {
         return "cars-main";
     }
     @GetMapping("/cars/add")
-    public String blogAdd(Cars cars,Model model) {return "cars-add";}
+    public String blogAdd(Model model) {
+        Iterable<PTS> pasport = ptsRepository.findAll();
+        model.addAttribute("pasport", pasport);
+        return "cars-add";}
 
     @PostMapping("/cars/add")
-    public String carsPostAdd(@ModelAttribute ("cars") @Valid Cars cars, BindingResult bindingResult)
+    public String carsPostAdd(@ModelAttribute ("cars") @Valid Cars cars,@RequestParam String number, BindingResult bindingResult)
     {
+        PTS pasport = ptsRepository.findByNumber(number);
+        Cars cars1 = new Cars(cars.getMark(), cars.getVladelec(),cars.Polom, cars.getAge(), cars.getProbeg(), pasport);
         if (bindingResult.hasErrors()){
             return "cars-add";
         }
-        carsRepository.save(cars);
+        carsRepository.save(cars1);
         return "redirect:/";
     }
 

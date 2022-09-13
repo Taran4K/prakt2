@@ -16,6 +16,11 @@
     <div style="color: red" th:if="${#fields.hasErrors('probeg')}" th:errors="*{probeg}"></div>
   <input th:field="*{age}" type="number" name="age" placeholder="Возраст">
     <div style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></div>
+    <select  name="number">
+        <div th:each="element : ${pasport}">
+            <option th:text="${element.number}"></option>
+        </div>
+    </select>
   <br>
   <button type="submit">Добавить машину</button>
 </form>

@@ -32,13 +32,27 @@ public class Students{
             inverseJoinColumns=@JoinColumn(name="university_id"))
     private List<University> universities;
 
-    public Students(String name, String surname, String otchestvo, String student_group, Integer age) {
+    @ManyToOne(optional = true, cascade = CascadeType.ALL)
+    private Address address;
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public Students(String name, String surname, String otchestvo, String student_group, Integer age,  Address address) {
         this.name = name;
         this.surname = surname;
         this.otchestvo = otchestvo;
         this.student_group = student_group;
         this.age = age;
+        this.address=address;
     }
+
+
     public Students() {
 
     }

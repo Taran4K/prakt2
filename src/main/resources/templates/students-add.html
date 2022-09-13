@@ -23,7 +23,11 @@
 
     <input th:field="*{age}" style="width: 250px; height: 40px; margin: 2px" type="number" name="age" placeholder="Введите возраст"><br>
     <div style="width: 250px; height: 40px; margin: 2px" th:if="*{#fields.hasErrors('age')}" th:errors="*{age}"></div><br>
-
+    <select  name="street">
+        <div th:each="element : ${address}">
+            <option th:text="${element.street}"></option>
+        </div>
+    </select>
     <button type="submit"> Добавить студента</button>
 </form>
 </body>

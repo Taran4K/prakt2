@@ -1,9 +1,6 @@
 package com.example.prakt2.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -20,6 +17,10 @@ public class Cars {
     public boolean Polom;
     @NotNull(message = "Поле не может быть пустым")
     private Integer probeg, age;
+
+    @OneToOne(optional = true, cascade = CascadeType.ALL)
+    @JoinColumn(name="pasport_id")
+    private PTS pasport;
 
     public Cars() {
 
@@ -72,13 +73,21 @@ public class Cars {
     public void setProbeg(Integer probeg) {
         this.probeg = probeg;
     }
+    public PTS getPasport() {
+        return pasport;
+    }
 
-    public Cars(String mark, String vladelec, boolean polom, Integer age, Integer probeg) {
+    public void setPasport(PTS pasport) {
+        this.pasport = pasport;
+    }
+
+    public Cars(String mark, String vladelec, boolean polom, Integer age, Integer probeg, PTS pasport) {
         this.mark = mark;
         this.vladelec = vladelec;
-        Polom = polom;
+        this.Polom = polom;
         this.age = age;
         this.probeg = probeg;
+        this.pasport=pasport;
     }
 
 }
