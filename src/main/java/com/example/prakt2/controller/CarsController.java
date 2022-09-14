@@ -34,7 +34,7 @@ public class CarsController {
         return "cars-main";
     }
     @GetMapping("/cars/add")
-    public String blogAdd(Model model) {
+    public String blogAdd(Cars cars,Model model) {
         Iterable<PTS> pasport = ptsRepository.findAll();
         model.addAttribute("pasport", pasport);
         return "cars-add";}
@@ -47,7 +47,7 @@ public class CarsController {
         if (bindingResult.hasErrors()){
             return "cars-add";
         }
-        carsRepository.save(cars1);
+        carsRepository.save(cars);
         return "redirect:/";
     }
 

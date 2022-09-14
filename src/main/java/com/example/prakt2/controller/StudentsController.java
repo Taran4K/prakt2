@@ -47,10 +47,12 @@ public class StudentsController {
 
 
     @PostMapping("/students/add")
-    public String studentAdd(@ModelAttribute("students")@Valid Students student,@RequestParam String street, BindingResult bindingResult)
+    public String studentAdd(@ModelAttribute("students")@Valid Students student,
+                             @RequestParam String street, BindingResult bindingResult)
     {
         Address adress = addressRepository.findByStreet(street);
-        Students person = new Students(student.getName(), student.getSurname(), student.getOtchestvo(), student.getStudent_group(), student.getAge(), adress);
+        Students person = new Students(student.getName(), student.getSurname(),
+                student.getOtchestvo(), student.getStudent_group(), student.getAge(), adress);
         if(bindingResult.hasErrors())
         {
             return "students-add";
